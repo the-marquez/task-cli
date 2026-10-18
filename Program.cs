@@ -74,13 +74,32 @@ class Program
                 }
                 else
                 {
-                    Log.Error($"Failed to add task: {taskId} - {taskDescription}");
+                    Log.Error($"Failed to update task: {taskId} - {taskDescription}");
                 }
 
                 break;
             
             case "delete":
-                // Handle delete command
+                
+                if( args.Length < 2)
+                {
+                    Log.Error("No task provided. Usage: delete <task_id>");
+                    return;
+                }
+
+                int taskId = Convert.ToInt32( args[1] );
+
+                bool deleteStatus = taskManager.DeleteTask( taskId );
+
+                if( deleteStatus)
+                {
+                  Log.Info($"Task delete successfully: {taskId}");
+                }
+                else
+                {
+                    Log.Error($"Failed to delete task: {taskId}");
+                }
+
                 break;
             case "list":
 
