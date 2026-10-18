@@ -104,15 +104,15 @@ class Program
             return;
         }
 
-        bool result = taskManager.AddTask(task);
+        var result = taskManager.AddTask(task);
 
-        if( result )
+        if( result.Success )
         {
-            Log.Info($"Task added successfully: {task}");
+            Log.Info($"Task added successfully (ID: {result.TaskId})");
         }
         else
         {
-            Log.Error($"Failed to add task: {task}");
+            Log.Error($"Failed to add task!");
         }
     }
 

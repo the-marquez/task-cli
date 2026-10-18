@@ -32,7 +32,7 @@ namespace task_cli.Core
             return JsonSerializer.Deserialize<List<Todo>>( json ) ?? new List<Todo>();
         }
 
-        public bool AddTask(string task)
+        public (bool Success, int TaskId) AddTask(string task)
         {
             List<Todo> tasks = new List<Todo>();
             try
@@ -41,7 +41,7 @@ namespace task_cli.Core
             }catch (Exception)
             {
                 Log.Error($"Error reading tasks!");
-                return false;
+                return (false, 0);
             }
 
             try
@@ -71,12 +71,12 @@ namespace task_cli.Core
 
                 File.WriteAllText(GetTaskFilePath(), json);
 
-                return true;
+                return (true, nextTaskId);
             }
             catch (Exception)
             {
                 Log.Error($"Error adding task!");
-                return false;
+                return (false, 0);
             }            
             
         }
