@@ -81,6 +81,48 @@ namespace task_cli.Core
             
         }
 
+        public bool UpdateTask(int id, string description)
+        {
+            List<Todo> tasks = new List<Todo>();
+            try
+            {
+                tasks = GetTasks();
+            }
+            catch (Exception)
+            {
+                Log.Error($"Error reading tasks!");
+                return false;
+            }
+
+            try
+            {
+                Todo? task = tasks.FirstOrDefault( t => t.Id == id );
+
+                if( task is null)
+                {
+                    Log.Warning($"Task with ID {id} not found!");
+                    return false;
+                }
+
+                task.Description = description;
+                task.UpdatedAt = DateTime.Now;
+                
+                string json = JsonSerializer.Serialize(
+                        tasks, 
+                        new JsonSerializerOptions { WriteIndented = true }
+                    );
+
+                File.WriteAllText( GetTaskFilePath(), json);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                Log.Error("Error updating the task");
+                return false;
+            }
+        }
+
         private string GetTaskFilePath()
         {
             return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tasks.json");

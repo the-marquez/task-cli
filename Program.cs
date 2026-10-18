@@ -43,9 +43,9 @@ class Program
                     return;
                 }
 
-                bool result = taskManager.AddTask(task);
+                bool creationState = taskManager.AddTask(task);
 
-                if( result)
+                if( creationState)
                 {
                   Log.Info($"Task added successfully: {task}");
                 }
@@ -56,7 +56,27 @@ class Program
                 break;
             
             case "update":
-                // Handle update command
+
+                if( args.Length < 3)
+                {
+                    Log.Error("No task provided. Usage: update <task_id> <new_task>");
+                    return;
+                }
+
+                int taskId = Convert.ToInt32( args[1] );
+                string taskDescription = args[2].Trim();
+
+                bool updateStatus = taskManager.UpdateTask( taskId,  taskDescription );
+
+                if( updateStatus)
+                {
+                  Log.Info($"Task updated successfully: {taskId} - {taskDescription}");
+                }
+                else
+                {
+                    Log.Error($"Failed to add task: {taskId} - {taskDescription}");
+                }
+
                 break;
             
             case "delete":
