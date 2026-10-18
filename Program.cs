@@ -133,7 +133,7 @@ class Program
     static void PrintVersion()
     {
         Console.WriteLine("task_cli version 1.0.0");
-        Console.WriteLine("> Author: Crack Night");
-        Console.WriteLine("> GitHub: https://github.com/cracknight/task-cli");
+        Console.WriteLine("> Author: Elmer Marquez <cracknight>");
+        Console.WriteLine("> GitHub: https://github.com/the-marquez/task-cli");
     }
 }
