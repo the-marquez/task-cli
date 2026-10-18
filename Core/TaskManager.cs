@@ -165,6 +165,90 @@ namespace task_cli.Core
             }
         }
 
+        public bool MarkTaskAsInProgress(int id)
+        {
+            List<Todo> tasks = new List<Todo>();
+            try
+            {
+                tasks = GetTasks();
+            }
+            catch (Exception)
+            {
+                Log.Error($"Error reading tasks!");
+                return false;
+            }
+
+            try
+            {
+                Todo? task = tasks.FirstOrDefault( t => t.Id == id );
+
+                if( task is null)
+                {
+                    Log.Warning($"Task with ID {id} not found!");
+                    return false;
+                }
+
+                task.Status = "in-progress";
+                task.UpdatedAt = DateTime.Now;
+
+                string json = JsonSerializer.Serialize(
+                        tasks, 
+                        new JsonSerializerOptions { WriteIndented = true }
+                    );
+
+                File.WriteAllText( GetTaskFilePath(), json);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                Log.Error($"Error marking task as in-progress!");
+                return false;
+            }
+        }
+
+        public bool MarkTaskAsDone(int id)
+        {
+            List<Todo> tasks = new List<Todo>();
+            try
+            {
+                tasks = GetTasks();
+            }
+            catch (Exception)
+            {
+                Log.Error($"Error reading tasks!");
+                return false;
+            }
+
+            try
+            {
+                Todo? task = tasks.FirstOrDefault( t => t.Id == id );
+
+                if( task is null)
+                {
+                    Log.Warning($"Task with ID {id} not found!");
+                    return false;
+                }
+
+                task.Status = "done";
+                task.UpdatedAt = DateTime.Now;
+
+                string json = JsonSerializer.Serialize(
+                        tasks, 
+                        new JsonSerializerOptions { WriteIndented = true }
+                    );
+
+                File.WriteAllText( GetTaskFilePath(), json);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                Log.Error($"Error marking task as done!");
+                return false;
+            }
+        }
+
         private string GetTaskFilePath()
         {
             return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tasks.json");

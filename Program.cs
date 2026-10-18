@@ -46,6 +46,14 @@ class Program
                 // list, list todo, list in-progress, list done
                 ListTasks(args, taskManager);
                 break;
+
+            case "mark-in-progress":
+                MarkTaskAsInProgress(args, taskManager);
+                break;
+            
+            case "mark-done":
+                MarkTaskAsDone(args, taskManager);
+                break;
             
             default:
                 Log.Error($"Unknown command: {args[0]}\n");
@@ -96,9 +104,9 @@ class Program
             return;
         }
 
-        bool creationState = taskManager.AddTask(task);
+        bool result = taskManager.AddTask(task);
 
-        if( creationState)
+        if( result )
         {
             Log.Info($"Task added successfully: {task}");
         }
@@ -119,9 +127,9 @@ class Program
         int taskId = Convert.ToInt32( args[1] );
         string taskDescription = args[2].Trim();
 
-        bool updateStatus = taskManager.UpdateTask( taskId,  taskDescription );
+        bool result = taskManager.UpdateTask( taskId,  taskDescription );
 
-        if( updateStatus)
+        if( result )
         {
             Log.Info($"Task updated successfully: {taskId} - {taskDescription}");
         }
@@ -141,9 +149,9 @@ class Program
 
         int taskId = Convert.ToInt32( args[1] );
 
-        bool deleteStatus = taskManager.DeleteTask( taskId );
+        bool result = taskManager.DeleteTask( taskId );
 
-        if( deleteStatus)
+        if( result )
         {
             Log.Info($"Task delete successfully: {taskId}");
         }
@@ -193,6 +201,50 @@ class Program
         else
         {
             Console.WriteLine(" * Empty................");
+        }
+    }
+
+    static void MarkTaskAsInProgress(string[] args, TaskManager taskManager)
+    {
+        if( args.Length < 2)
+        {
+            Log.Error("Missing required parameter. Usage: task-cli mark-in-progress <task_id>");
+            return;
+        }
+
+        int taskId = Convert.ToInt32( args[1] );
+
+        bool result = taskManager.MarkTaskAsInProgress( taskId );
+
+        if( result)
+        {
+            Log.Info($"Task {taskId} marked as in-progress successfully.");
+        }
+        else
+        {
+            Log.Error($"Failed to mark task {taskId} as in-progress.");
+        }
+    }
+
+    static void MarkTaskAsDone(string[] args, TaskManager taskManager)
+    {
+        if( args.Length < 2)
+        {
+            Log.Error("Missing required parameter. Usage: task-cli mark-done <task_id>");
+            return;
+        }
+
+        int taskId = Convert.ToInt32( args[1] );
+
+        bool result = taskManager.MarkTaskAsDone( taskId );
+
+        if( result )
+        {
+            Log.Info($"Task {taskId} marked as done successfully.");
+        }
+        else
+        {
+            Log.Error($"Failed to mark task {taskId} as done.");
         }
     }
 }
