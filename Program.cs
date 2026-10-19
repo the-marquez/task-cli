@@ -178,6 +178,11 @@ class Program
             return;
         }
 
+        if( !(args.Length == 2))
+        {
+            return;
+        }
+
         string statusFilter = args[1].Trim().ToLower();
 
         string[] validStatuses = ["todo", "in-progress", "done"];
@@ -197,7 +202,7 @@ class Program
         {
             Console.WriteLine("| Id\t| Description\t| Status\t| Created At\t| Updated At |");
             Console.WriteLine("-------------------------------------------------------------");
-            foreach (var t in tasks)
+            foreach (var t in filteredTasks)
             {
                 Console.WriteLine($"|{t.Id}\t|{t.Description}\t|{t.Status}\t|{t.CreatedAt}\t|{t.UpdatedAt}|");
             }
