@@ -169,9 +169,11 @@ class Program
         if( args.Length == 1)
         {
             Console.WriteLine("All tasks:");
+            Console.WriteLine("| Id\t| Description\t| Status\t| Created At\t| Updated At |");
+            Console.WriteLine("-------------------------------------------------------------");
             foreach (var t in tasks)
             {
-                Console.WriteLine($" * {t.Id} {t.Description} ({t.Status}) - Created At: {t.CreatedAt} - Updated At: {t.UpdatedAt}");
+                Console.WriteLine($"| {t.Id}\t| {t.Description}\t| {t.Status}\t| {t.CreatedAt}\t| {t.UpdatedAt} |");
             }
             return;
         }
@@ -193,13 +195,16 @@ class Program
         Console.WriteLine($"Tasks with status {statusFilter}:");
         if( filteredTasks.Count > 0)
         {
-            foreach (var t in filteredTasks)
+            Console.WriteLine("| Id\t| Description\t| Status\t| Created At\t| Updated At |");
+            Console.WriteLine("-------------------------------------------------------------");
+            foreach (var t in tasks)
             {
-                Console.WriteLine($" * {t.Id} {t.Description} ({t.Status}) - Created At: {t.CreatedAt} - Updated At: {t.UpdatedAt}");
+                Console.WriteLine($"|{t.Id}\t|{t.Description}\t|{t.Status}\t|{t.CreatedAt}\t|{t.UpdatedAt}|");
             }
         }
         else
         {
+            Console.WriteLine("Id\tDescription\tStatus\tCreated At\tUpdated At");
             Console.WriteLine(" * Empty................");
         }
     }
