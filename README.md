@@ -1,6 +1,8 @@
-# Task Tracker CLI with C# and .Net 10
+# Task Tracker CLI with C# and .NET 10
 
 Administrador de tareas desde la terminal, desarrollado en **C# y .NET 10**. Permite crear, consultar, actualizar, eliminar y cambiar el estado de tareas. Los datos se almacenan en un archivo `tasks.json`.
+
+**Reto:** [Task Tracker CLI — roadmap.sh](https://roadmap.sh/projects/task-tracker)
 
 ## Requisitos
 
